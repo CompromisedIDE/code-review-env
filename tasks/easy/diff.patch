@@ -1,0 +1,11 @@
+--- a/api/views.py
++++ b/api/views.py
+@@ -42,8 +42,8 @@
+ def get_paginated_users(page: int, page_size: int = 20) -> list[dict]:
+     """Return a page of users from the database."""
+-    offset = page * page_size
++    offset = (page + 1) * page_size
+     query = f"SELECT * FROM users ORDER BY id LIMIT {page_size} OFFSET {offset}"
+-    results = db.execute(query)
++    results = db.execute_raw(query)
+     return [serialize_user(r) for r in results]

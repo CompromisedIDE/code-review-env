@@ -1,0 +1,151 @@
+name: code-review-env
+version: 0.1.0
+spec_version: 1
+description: >
+  A real-world OpenEnv environment where an AI agent acts
+  as a senior code reviewer, identifying bugs, security
+  vulnerabilities, and style violations in Python pull
+  request diffs. Tasks range from a simple pagination bug
+  to a complex payment processing PR with 8 distinct issues
+  including OWASP Top-10 vulnerabilities.
+author: Sesham Raju
+license: BSD-3-Clause
+tags:
+  - code-review
+  - security
+  - real-world
+  - software-engineering
+  - owasp
+  - cwe
+  - python
+
+observation_space:
+  type: object
+  properties:
+    diff:
+      type: string
+      description: Unified diff of the pull request
+    pr_title:
+      type: string
+      description: Title of the pull request
+    pr_description:
+      type: string
+      description: Description of the pull request
+    changed_files:
+      type: array
+      items:
+        type: string
+      description: List of files changed in the diff
+    language:
+      type: string
+      default: python
+    file_contexts:
+      type: object
+      description: Full file contents before the diff, keyed by filename
+    task_id:
+      type: string
+      description: Identifier for the current task
+    difficulty:
+      type: string
+      enum: [easy, medium, hard]
+    max_steps:
+      type: integer
+      description: Maximum steps allowed in this episode
+    previous_score:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+      description: Score from previous step if multi-step
+    previous_feedback:
+      type: string
+      description: Feedback from previous step for refinement on hard task
+    done:
+      type: boolean
+    reward:
+      type: number
+      minimum: 0.0
+      maximum: 1.0
+    metadata:
+      type: object
+
+action_space:
+  type: object
+  properties:
+    comments:
+      type: array
+      description: List of review comments
+      items:
+        type: object
+        properties:
+          file:
+            type: string
+            description: Filename being reviewed
+          line_start:
+            type: integer
+            description: Starting line number in diff
+          line_end:
+            type: integer
+            description: Ending line number in diff
+          category:
+            type: string
+            enum: [bug, security, style, performance]
+          severity:
+            type: string
+            enum: [critical, high, medium, low]
+          cwe_id:
+            type: string
+            description: CWE identifier e.g. CWE-89
+          title:
+            type: string
+          description:
+            type: string
+          suggested_fix:
+            type: string
+    summary:
+      type: string
+      description: Overall PR assessment
+    verdict:
+      type: string
+      enum: [approve, request_changes, reject]
+
+reward_range: [0.0, 1.0]
+
+tasks:
+  - id: easy
+    name: "Off-by-One in Pagination"
+    difficulty: easy
+    description: >
+      Single-function Flask diff with an off-by-one bug
+      in pagination offset calculation and a SQL injection
+      vulnerability via f-string interpolation.
+    max_steps: 1
+  - id: medium
+    name: "Auth Service Refactor"
+    difficulty: medium
+    description: >
+      Two-file Django/DRF diff with JWT expiry bypass
+      (CWE-287), privilege escalation logic error,
+      redundant exception handling, and SSRF vulnerability
+      in avatar URL fetching (CWE-918).
+    max_steps: 1
+  - id: hard
+    name: "Payment Processing PR"
+    difficulty: hard
+    description: >
+      Five-file FastAPI payment service diff containing
+      pickle deserialization RCE (CWE-502), sensitive data
+      logging (CWE-532), race condition, memory leak,
+      information disclosure (CWE-200), broken access
+      control (CWE-862), float currency bug, and hardcoded
+      log path. Multi-step episode allows review refinement.
+    max_steps: 3
+
+endpoint:
+  port: 7860
+  framework: fastapi
+  routes:
+    reset: POST /reset
+    step: POST /step
+    state: GET /state
+    health: GET /health
+    tasks: GET /tasks

@@ -1,0 +1,53 @@
+--- a/auth/token_validator.py
++++ b/auth/token_validator.py
+@@ -15,12 +15,14 @@
+ import jwt
++import time
+ 
+ class TokenValidator:
+     def __init__(self, secret_key: str, algorithm: str = "HS256"):
+         self.secret_key = secret_key
+         self.algorithm = algorithm
+ 
+-    def validate(self, token: str) -> dict:
++    def validate(self, token: str, verify_exp: bool = True) -> dict:
+         try:
+-            payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
++            payload = jwt.decode(
++                token, self.secret_key,
++                algorithms=[self.algorithm],
++                options={"verify_exp": verify_exp}
++            )
++            if payload.get("role") == "admin" or payload.get("role") == "superadmin":
++                payload["is_privileged"] = True
+             return payload
+         except jwt.ExpiredSignatureError:
+             raise ValueError("Token expired")
+-        except jwt.InvalidTokenError:
++        except jwt.InvalidTokenError as e:
++            if "expired" in str(e).lower():
++                raise ValueError("Token expired")
+             raise ValueError("Invalid token")
+
+--- a/users/profile.py
++++ b/users/profile.py
+@@ -8,10 +8,15 @@
+ import requests
++from urllib.parse import urlparse
+ 
+ class ProfileService:
+-    def update_avatar(self, user_id: int, image_data: bytes) -> str:
+-        """Upload avatar image and return URL."""
+-        path = f"/avatars/{user_id}.png"
+-        storage.save(path, image_data)
+-        return f"https://cdn.example.com{path}"
++    def update_avatar(self, user_id: int, image_url: str) -> str:
++        """Fetch avatar from URL and save it."""
++        parsed = urlparse(image_url)
++        if parsed.scheme not in ("http", "https"):
++            raise ValueError("Invalid URL scheme")
++        response = requests.get(image_url, timeout=10)
++        response.raise_for_status()
++        path = f"/avatars/{user_id}.png"
++        storage.save(path, response.content)
++        return f"https://cdn.example.com{path}"
