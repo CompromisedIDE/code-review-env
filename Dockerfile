@@ -8,14 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Verify tasks load at build time — fails build if any import is broken
-RUN python -c " \
-import sys; \
-sys.path.insert(0, '/app'); \
-from tasks import REGISTRY; \
-tasks = REGISTRY.list_tasks(); \
-assert len(tasks) == 3, f'Expected 3 tasks, got {len(tasks)}'; \
-print(f'Build check: {len(tasks)} tasks loaded OK') \
-"
+RUN python -c "import sys; sys.path.insert(0, '/app'); from tasks import REGISTRY; tasks = REGISTRY.list_tasks(); assert len(tasks) == 3; print(f'Build check: {len(tasks)} tasks loaded OK')"
 
 EXPOSE 7860
 
