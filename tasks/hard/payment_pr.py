@@ -4,8 +4,8 @@ tasks/hard/payment_pr.py — Hard task: payment processor security audit (3-step
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue
-from code_review_env.tasks.base_task import TaskDefinition
+from models import GroundTruthIssue
+from tasks.base_task import TaskDefinition
 
 # ---------------------------------------------------------------------------
 # Unified diff (5 files)

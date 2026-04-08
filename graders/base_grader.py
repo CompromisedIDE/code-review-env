@@ -9,7 +9,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from code_review_env.models import GroundTruthIssue, ReviewComment
+    from models import GroundTruthIssue, ReviewComment
 
 
 # ---------------------------------------------------------------------------

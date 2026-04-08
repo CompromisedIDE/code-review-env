@@ -12,7 +12,7 @@ Matching rules
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue, ReviewComment
+from models import GroundTruthIssue, ReviewComment
 
 # Line-overlap tolerance (lines)
 LINE_TOLERANCE: int = 3

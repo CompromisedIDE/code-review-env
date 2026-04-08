@@ -4,8 +4,8 @@ tasks/easy/off_by_one.py — Easy task: off-by-one pagination + SQL injection.
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue
-from code_review_env.tasks.base_task import TaskDefinition
+from models import GroundTruthIssue
+from tasks.base_task import TaskDefinition
 
 # ---------------------------------------------------------------------------
 # Unified diff (byte-for-byte canonical form)

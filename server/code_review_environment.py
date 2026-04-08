@@ -11,15 +11,15 @@ import uuid
 from dataclasses import asdict
 from typing import Any, Optional
 
-from code_review_env.models import (
+from models import (
     ReviewAction,
     ReviewComment,
     ReviewObservation,
     ReviewState,
 )
-from code_review_env.graders import CompositeGrader, critical_miss_penalty
-from code_review_env.tasks import REGISTRY
-from code_review_env.tasks.base_task import TaskDefinition
+from graders import CompositeGrader, critical_miss_penalty
+from tasks import REGISTRY
+from tasks.base_task import TaskDefinition
 
 # ---------------------------------------------------------------------------
 # Try to import the real openenv Environment base; fall back gracefully
@@ -300,7 +300,7 @@ if __name__ == "__main__":
     assert len(obs.diff) > 100
     print(f"reset() OK  — episode_id={obs.metadata['episode_id']}")
 
-    from code_review_env.models import ReviewAction
+    from models import ReviewAction
     obs2, reward, done, info = env.step(ReviewAction())
     assert 0.0 <= reward <= 1.0
     assert done is True   # easy has max_steps=1

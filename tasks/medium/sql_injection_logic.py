@@ -4,8 +4,8 @@ tasks/medium/sql_injection_logic.py — Medium task: auth bypass + SSRF.
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue
-from code_review_env.tasks.base_task import TaskDefinition
+from models import GroundTruthIssue
+from tasks.base_task import TaskDefinition
 
 # ---------------------------------------------------------------------------
 # Unified diff (2 files)

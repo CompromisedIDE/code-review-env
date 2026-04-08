@@ -21,7 +21,7 @@ This keeps grader logic clean.
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue, ReviewComment
+from models import GroundTruthIssue, ReviewComment
 
 from .bug_grader import BugGrader
 from .security_grader import SecurityGrader

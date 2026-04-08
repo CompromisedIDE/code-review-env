@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from code_review_env.models import GroundTruthIssue
+from models import GroundTruthIssue
 
 
 @dataclass

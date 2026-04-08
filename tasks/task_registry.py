@@ -7,7 +7,7 @@ This module intentionally does NOT auto-register tasks.
 
 from __future__ import annotations
 
-from code_review_env.tasks.base_task import TaskDefinition
+from tasks.base_task import TaskDefinition
 
 
 class TaskRegistry:

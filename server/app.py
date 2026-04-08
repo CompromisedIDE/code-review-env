@@ -16,9 +16,9 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from code_review_env.models import ReviewAction, ReviewComment
-from code_review_env.server.code_review_environment import CodeReviewEnv
-from code_review_env.tasks import REGISTRY
+from models import ReviewAction, ReviewComment
+from server.code_review_environment import CodeReviewEnv
+from tasks import REGISTRY
 
 logger = logging.getLogger(__name__)
 

@@ -11,7 +11,7 @@ Edge cases
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue, ReviewComment
+from models import GroundTruthIssue, ReviewComment
 
 from .base_grader import BaseGrader, GradeResult
 from .matching import compute_matches

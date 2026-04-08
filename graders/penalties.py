@@ -8,7 +8,7 @@ and how penalties are applied.
 
 from __future__ import annotations
 
-from code_review_env.models import GroundTruthIssue, ReviewComment
+from models import GroundTruthIssue, ReviewComment
 from .matching import compute_matches
 
 CRITICAL_MISS_PENALTY: float = 0.30
