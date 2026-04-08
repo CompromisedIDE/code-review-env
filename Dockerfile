@@ -8,6 +8,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 
 COPY . .
 
+RUN find /app -type f -name "*.py" | head -30 && echo "---" && ls /app
+
 RUN PYTHONPATH=/app python -c "from code_review_env.tasks import REGISTRY; tasks = REGISTRY.list_tasks(); assert len(tasks) == 3; print(f'Build check: {len(tasks)} tasks loaded OK')"
 
 EXPOSE 7860
