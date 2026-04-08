@@ -195,7 +195,7 @@ class CodeReviewEnv(_BaseEnvironment):
         raw_reward   = base_reward - penalty
 
         # Hard clamp to [0.0, 1.0]
-        reward = max(0.0, min(1.0, raw_reward))
+        reward = max(0.001, min(0.999, raw_reward))
 
         # Grade details (used for info dict and multi-step feedback)
         details = self.grader.grade_with_details(comments, ground_truth)

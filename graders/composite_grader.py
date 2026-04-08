@@ -148,7 +148,7 @@ class CompositeGrader:
             + sty_result.false_negatives
         )
 
-        final = max(0.0, min(1.0, positive - fp_penalty))
+        final = max(0.001, min(0.999, positive - fp_penalty))
 
         return {
             "final":              final,
