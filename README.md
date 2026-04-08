@@ -10,9 +10,7 @@ tags:
   - security
   - reinforcement-learning
   - agent-evaluation
-short_description: >
-  OpenEnv environment for AI agents acting as senior
-  code reviewers identifying bugs and vulnerabilities
+short_description: AI agents identify bugs and vulnerabilities.
 ---
 
 # Code Review & Security Audit — OpenEnv Environment
