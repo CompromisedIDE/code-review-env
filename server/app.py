@@ -165,14 +165,14 @@ from fastapi import Request  # noqa: E402 (imported after app for clarity)
 
 
 @app.post("/reset")
-async def reset(body: ResetRequest, request: Request) -> dict:
+async def reset(request: Request, body: Optional[ResetRequest] = None) -> dict:
     """
     Reset the environment to start a new episode.
 
     Accepts an empty JSON body {} (task_id defaults to 'easy').
     """
     env = _get_env(request)
-    task_id = body.task_id or "easy"
+    task_id = body.task_id if body and body.task_id else "easy"
     obs = env.reset(task_id)
     return _obs_to_dict(obs)
 
