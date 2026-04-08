@@ -227,6 +227,9 @@ async def tasks() -> list:
 # Entrypoint
 # ---------------------------------------------------------------------------
 
-if __name__ == "__main__":
+def main():
     import uvicorn
-    uvicorn.run("server.app:app", host="0.0.0.0", port=7860, log_level="info")
+    uvicorn.run(app, host="0.0.0.0", port=7860)
+
+if __name__ == "__main__":
+    main()

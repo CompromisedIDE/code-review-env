@@ -27,3 +27,6 @@ test = [
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["code_review_env*"]
+
+[project.scripts]
+server = "server.app:main"
